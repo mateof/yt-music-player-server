@@ -5,10 +5,11 @@ Deploy YouTube Music API using Docker.
 ## Quick Start
 
 1. Copy this folder to your server
-2. Create `browser.json` with your YouTube Music credentials:
+2. Create `userdata/browser.json` with your YouTube Music credentials:
    ```bash
-   cp ../browser.json.example browser.json
-   # Edit browser.json with your credentials
+   mkdir -p userdata
+   cp ../userdata/browser.json.example userdata/browser.json
+   # Edit userdata/browser.json with your credentials
    ```
 3. Start the service:
    ```bash
@@ -17,7 +18,7 @@ Deploy YouTube Music API using Docker.
 
 ## Configuration
 
-### browser.json
+### userdata/browser.json
 
 Required for accessing your YouTube Music library (playlists, liked songs, etc.).
 
@@ -26,12 +27,12 @@ To get your credentials:
 2. Open DevTools (F12) > Network tab
 3. Find a request to `music.youtube.com`
 4. Copy the `Cookie` and `Authorization` headers
-5. Paste them in `browser.json`
+5. Paste them in `userdata/browser.json`
 
 ### Volumes
 
 - `./data` - Downloaded music files
-- `./browser.json` - Authentication credentials (read-only)
+- `./userdata` - Authentication credentials and user config
 
 ## Commands
 

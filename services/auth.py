@@ -8,7 +8,7 @@ from ytmusicapi import YTMusic
 
 # Archivo donde se guardan las credenciales
 # IMPORTANTE: El nombre debe contener "browser" para que ytmusicapi lo detecte correctamente
-AUTH_FILE = Path(__file__).parent.parent / "browser.json"
+AUTH_FILE = Path(__file__).parent.parent / "userdata" / "browser.json"
 
 
 def is_authenticated() -> bool:

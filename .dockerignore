@@ -34,7 +34,7 @@ ENV/
 *.swo
 
 # Project specific
-browser.json
+userdata/
 data/
 deploy/
 *.log

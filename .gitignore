@@ -71,7 +71,7 @@ venv.bak/
 Thumbs.db
 
 # Project specific
-browser.json
+userdata/browser.json
 data/
 *.log
 

@@ -9,8 +9,8 @@ services:
     volumes:
       # Persist downloaded music
       - ./data:/app/data
-      # Mount browser.json for authentication
-      - ./browser.json:/app/browser.json:ro
+      # Mount userdata for authentication
+      - ./userdata:/app/userdata:rw
     environment:
       - TZ=Europe/Madrid
     restart: unless-stopped
