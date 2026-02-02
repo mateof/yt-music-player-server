@@ -1,5 +1,10 @@
 FROM python:3.11-slim
 
+# Labels for GitHub Container Registry
+LABEL org.opencontainers.image.source="https://github.com/mateof/yt-music-player-server"
+LABEL org.opencontainers.image.description="YouTube Music API Backend"
+LABEL org.opencontainers.image.licenses="MIT"
+
 # Build argument for version
 ARG VERSION=1.0.0
 ENV APP_VERSION=${VERSION}
