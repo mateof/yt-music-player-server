@@ -1,0 +1,31 @@
+# Docker Compose example for production deployment
+# Uses the pre-built image from GitHub Container Registry
+#
+# Usage:
+#   1. Copy this file to your server
+#   2. Create browser.json with your YouTube Music credentials (see browser.json.example)
+#   3. Run: docker compose up -d
+#
+# To update to latest version:
+#   docker compose pull && docker compose up -d
+
+services:
+  yt-music-api:
+    image: ghcr.io/mateof/yt-music-player-server:latest
+    container_name: yt-music-api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persist downloaded music
+      - ./data:/app/data
+      # Mount browser.json for authentication (required for library access)
+      - ./browser.json:/app/browser.json:ro
+    environment:
+      - TZ=Europe/Madrid
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
