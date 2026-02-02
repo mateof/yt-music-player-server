@@ -1,0 +1,22 @@
+services:
+  yt-music-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: yt-music-api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persist downloaded music
+      - ./data:/app/data
+      # Mount browser.json for authentication
+      - ./browser.json:/app/browser.json:ro
+    environment:
+      - TZ=Europe/Madrid
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

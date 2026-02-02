@@ -1,0 +1,44 @@
+name: Docker Image CI (Main)
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version from version.py
+        id: version
+        run: |
+          VERSION=$(grep -oP '(?<=__version__ = ").*(?=")' version.py)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/yt-music-player-server
+
+          echo "Building image version: $VERSION"
+
+          docker build . \
+            --build-arg VERSION=$VERSION \
+            --tag $IMAGE_NAME:$VERSION \
+            --tag $IMAGE_NAME:latest
+
+          docker push $IMAGE_NAME:$VERSION
+          docker push $IMAGE_NAME:latest
+
+          echo "Pushed: $IMAGE_NAME:$VERSION"
+          echo "Pushed: $IMAGE_NAME:latest"
